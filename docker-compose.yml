@@ -11,6 +11,7 @@ services:
         condition: service_healthy
     volumes:
       - ./app:/app/app
+      - C:/Users/Aravind/.local/share/opencode:/opencode_data:ro
 
   db:
     image: postgres:16-alpine
