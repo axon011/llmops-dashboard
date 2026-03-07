@@ -9,6 +9,7 @@ A full-stack dashboard for tracking and visualizing AI coding tool usage. Displa
 - **Multi-Provider Support** - Tracks usage across opencode, github-copilot, zai-coding-plan
 - **Interactive Dashboard** - React with Recharts visualizations
 - **Tabbed Interface** - OpenCode Usage + Langfuse Metrics views
+- **Modern UI** - Gradient backgrounds, glassmorphism, animated cards
 - **Fully Containerized** - Docker Compose for easy deployment
 
 ## Architecture
@@ -33,6 +34,28 @@ docker run -d --name llmops-dashboard-app -p 8000:8000 --env-file .env -v "C:/Us
 
 **Dashboard:** http://localhost:8000
 
+## Dashboard Features
+
+### OpenCode Usage Tab
+- **Hero Stats** - Total tokens, coding sessions, API calls, total cost
+- **Model Distribution** - Pie chart showing token usage by model
+- **Token Breakdown** - Progress bars for input, output, reasoning, cache read
+- **Daily Trends** - Bar chart showing 14-day usage history
+- **Model Rankings** - Cards with mini progress bars showing input/output split
+
+### Langfuse Metrics Tab
+- Session metrics visualization
+- Token usage by session charts
+- Mock data for demo purposes
+
+### UI/UX Features
+- Gradient background with glassmorphism header
+- Animated stat cards with hover lift effect
+- Gradient progress bars with smooth transitions
+- Area chart for recent activity trends
+- Responsive design with TailwindCSS
+- Live indicator badge
+
 ## API Endpoints
 
 | Endpoint | Description |
@@ -46,7 +69,7 @@ docker run -d --name llmops-dashboard-app -p 8000:8000 --env-file .env -v "C:/Us
 ## Tech Stack
 
 - **Backend:** FastAPI, Python 3.11, SQLite
-- **Frontend:** React 18, TypeScript, Recharts, TailwindCSS
+- **Frontend:** React 18, TypeScript, Recharts, TailwindCSS, Vite
 - **Database:** PostgreSQL, SQLite (OpenCode)
 - **Container:** Docker, Docker Compose
 
@@ -68,14 +91,41 @@ The dashboard reads usage data from OpenCode's local SQLite database:
 
 Mount this directory into the container to see your actual usage data.
 
+## Components
+
+### Frontend Components
+- `App.tsx` - Main dashboard with tabbed interface
+- `StatCard` - Animated stat card with icon
+- `ProgressBar` - Gradient progress bar component
+- `ModelCard` - Model ranking card with mini progress bars
+
+### Backend Routes
+- `/opencode/metrics` - OpenCode usage endpoint
+- `/metrics/sessions` - Langfuse session metrics endpoint
+- `/chat` - LLM chat endpoint
+- `/health` - Health check endpoint
+
 ## Screenshots
 
 The dashboard displays:
-- Total tokens, sessions, API calls
-- Usage by model (pie chart)
+- Total tokens, sessions, API calls, cost
+- Usage by model (pie chart with legend)
 - Token breakdown (input/output/reasoning/cache)
-- Daily usage trends (bar chart)
-- Detailed model statistics
+- Daily usage trends (bar chart with gradient)
+- Model details with provider badges
+
+## Running with Docker Compose
+
+```bash
+# Start all services
+docker-compose up -d --build
+
+# View logs
+docker logs llmops-dashboard-app -f
+
+# Stop services
+docker-compose down
+```
 
 ## License
 
