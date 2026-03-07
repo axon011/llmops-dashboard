@@ -20,11 +20,16 @@ app.add_middleware(
 
 frontend_path = "/app/static"
 
-app.mount("/assets", StaticFiles(directory=os.path.join(frontend_path, "assets")), name="assets")
+assets_path = os.path.join(frontend_path, "assets")
+if os.path.exists(assets_path):
+    app.mount("/assets", StaticFiles(directory=assets_path), name="assets")
 
-@app.get("/")
-def serve_frontend():
-    return FileResponse(os.path.join(frontend_path, "index.html"))
+if os.path.exists(frontend_path):
+    index_path = os.path.join(frontend_path, "index.html")
+
+    @app.get("/")
+    def serve_frontend():
+        return FileResponse(index_path)
 
 app.include_router(chat.router, prefix="/chat", tags=["chat"])
 app.include_router(metrics.router, prefix="/metrics", tags=["metrics"])
