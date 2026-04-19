@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   app:
     build: .
@@ -11,10 +9,13 @@ services:
         condition: service_healthy
     volumes:
       - ./app:/app/app
-      - C:/Users/Aravind/.local/share/opencode:/opencode_data:ro
+      - ./migrations:/app/migrations
+      - ${OPENCODE_PATH:-C:/Users/Aravind/.local/share/opencode}:/opencode_data:ro
 
   db:
     image: postgres:16-alpine
+    ports:
+      - "5432:5432"
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}

@@ -1,8 +1,11 @@
 .env
+.env.local
 __pycache__/
 *.pyc
 node_modules/
 *.log
-dist/
+frontend/dist/
 .opencode_data/
-.agent.md  
+.agent.md
+.pytest_cache/
+*.db
